@@ -17,13 +17,17 @@ jobs:
       - name: Print Working Directory
         run: pwd
 
-      # Step 3: Setup Terraform
+      # Step 3: List Repository Contents
+      - name: List Files in Repository
+        run: ls -la
+
+      # Step 4: Setup Terraform
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.5.0
 
-      # Step 4: Configure AWS Credentials
+      # Step 5: Configure AWS Credentials
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
@@ -31,4 +35,15 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.TF_REGION }}
 
-      # Step 5: List Rep
+      # Step 6: Initialize Terraform
+      - name: Terraform Init
+        run: terraform init
+
+      # Step 7: Terraform Plan
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+
+      # Step 8: Terraform Apply
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main'
+        run: terraform apply -auto-approve tfplan
