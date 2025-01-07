@@ -1,4 +1,4 @@
 module "s3_bucket" {
-  source      = "./modules/s3"
+  source      = "./modules/S3"
   bucket = var.bucket
 }
