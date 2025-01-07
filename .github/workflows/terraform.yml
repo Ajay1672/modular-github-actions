@@ -2,7 +2,7 @@ name: Terraform Deploy S3
 
 on:
   workflow_dispatch:
-  
+
 jobs:
   terraform:
     name: Terraform Job S3
@@ -39,9 +39,9 @@ jobs:
       - name: Terraform Init
         run: terraform init
 
-      # Step 7: Terraform Plan
-      - name: Terraform Plan
-        run: terraform plan -out=tfplan
+      # Step 7: Terraform Plan (Optional step, if needed)
+      # - name: Terraform Plan
+      #   run: terraform plan -out=tfplan
 
       # Step 8: Terraform Apply
       - name: Terraform Apply
