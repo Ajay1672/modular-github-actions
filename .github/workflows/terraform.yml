@@ -1,12 +1,11 @@
 name: Terraform Deploy S3
 
 on:
-  # Trigger manually via GitHub Actions UI
   workflow_dispatch:
   
 jobs:
   terraform:
-    name: Terraform Job S3  
+    name: Terraform Job S3
     runs-on: ubuntu-latest
 
     steps:
@@ -14,13 +13,17 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      # Step 2: Setup Terraforms
+      # Step 2: Print the Working Directory
+      - name: Print Working Directory
+        run: pwd
+
+      # Step 3: Setup Terraform
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.5.0
 
-      # Step 3: Configure AWS Credentials
+      # Step 4: Configure AWS Credentials
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
@@ -28,15 +31,4 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.TF_REGION }}
 
-      # Step 4: Initialize Terraform
-      - name: Terraform Init
-        run: terraform init
-
-      # Step 5: Terraform Plan
-      - name: Terraform Plan
-        run: terraform plan -out=tfplan
-
-      # Step 6: Terraform Apply
-      - name: Terraform Apply
-        if: github.ref == 'refs/heads/main'  # Apply only on the main branch
-        run: terraform apply -auto-approve tfplan
+      # Step 5: List Rep
