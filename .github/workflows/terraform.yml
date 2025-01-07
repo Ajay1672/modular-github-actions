@@ -39,11 +39,11 @@ jobs:
       - name: Terraform Init
         run: terraform init
 
-      # Step 7: Terraform Plan (Optional step, if needed)
+      # Step 7: Terraform Plan (Optional, if needed)
       # - name: Terraform Plan
       #   run: terraform plan -out=tfplan
 
       # Step 8: Terraform Apply
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/master'  # Changed 'main' to 'master'
         run: terraform apply -auto-approve tfplan
